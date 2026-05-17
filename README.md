@@ -44,17 +44,17 @@ Para ver el árbol de derivación de forma gráfica interactiva utilizando la ex
 ## Notas sobre problemas que tuve durante el desarrollo
 Dejo anotados los errores que me fueron surgiendo mientras armaba el proyecto y cómo los fui solucionando:
 
-## 1. Mayúsculas y minúsculas en ANTLR:
+1. Mayúsculas y minúsculas en ANTLR:
 Al principio puse los nombres de las reglas sintácticas con mayúscula (como Campo o Metadata). ANTLR se volvía loco porque se pensaba que eran tokens del lexer. Lo solucioné pasando todas las reglas del parser a minúsculas, dejando las mayúsculas solo para los tokens como TEXTO o NUMERO.
 
-## 2. Problemas con la Ñ y las tildes: 
+2. Problemas con la Ñ y las tildes: 
 Quise usar la palabra tamaño y descripción en la gramática, pero Node.js tiraba errores raros de formato (con códigos como \u00C3). Al final decidí sacar las tildes y la Ñ, dejando tamano y descripcion para evitar problemas de codificación.
 
-## 3. El espacio en blanco después de los dos puntos: 
+3. El espacio en blanco después de los dos puntos: 
 En la gramática, el espacio forma parte de la regla CARACTER. Si ponía por ejemplo etiquetas: [letra], el analizador se pensaba que el espacio después de los dos puntos era el valor de texto y el corchete rompía todo porque esperaba un punto y coma. La solución fue escribir el archivo de entrada sin espacios de formato pegado a los dos puntos y a las comas.
 
-## 4. Error con el require (ES Modules): 
+4. Error con el require (ES Modules): 
 Como el proyecto base venía configurado con "type": "module" en el package.json, Node no me dejaba usar require para importar ANTLR en el index.js. Tuve que cambiar todo a la sintaxis moderna de import y ponerle el .js al final a las rutas de la carpeta generated.
 
-## 5. Cambios en la versión de ANTLR4: 
+5. Cambios en la versión de ANTLR4: 
 Al querer armar la tabla de tokens, intenté usar lexer.symbolicNames como decía un ejemplo, pero me tiraba que no existía (undefined). Al parecer cambia según la versión de la librería, así que armé una línea en JavaScript que busca esa lista en el lexer o en el parser automáticamente para que no falle.
