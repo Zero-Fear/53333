@@ -1,0 +1,2 @@
+nombre:"Mi Proyecto";
+tamano:2048;
