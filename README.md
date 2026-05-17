@@ -7,19 +7,26 @@ Este proyecto es un analizador léxico y sintáctico hecho con ANTLR4 y Node.js.
 * **Java**: OpenJDK 17.0.19 (Temurin) -> *Nota: Se requirió esta versión ya que el .jar nuevo de ANTLR4 no es compatible con el Java 1.8 base de los apuntes viejos.*
 * **ANTLR**: antlr-4.13.2-complete.jar
 
+## Como abrir el proyecto:
+Copia el enlace del repositorio y clonalo en tu computadora con el siguiente comando en el cmd(terminal) : 
+    ```bash
+    git clone (enlace) 
+Una vez clonado, abre la carpeta completa del proyecto utilizando VS Code con los comandos : 
+    ```bash
+    cd 53333 
+    //luego :
+    code .
+
 ## Cómo ejecutar y probar el proyecto
 
 El analizador se puede probar de dos maneras diferentes según lo que se quiera revisar:
 
 ### Opción 1: Ejecución por consola (Script Principal)
 Para correr el analizador y ver la tabla de tokens, el árbol de texto y el objeto JavaScript final:
-1. Instalar las dependencias de Node ejecutando en la terminal:
-   ```bash
-   npm install
 
-2. El programa busca un archivo llamado input.txt en la raíz. Para probar los distintos ejemplos que dejé, copien el contenido de cualquiera de los archivos de prueba y péguenlo dentro de input.txt.
+1. El programa busca un archivo llamado input.txt en la raíz. Para probar los distintos ejemplos que dejé, copien el contenido de cualquiera de los archivos de prueba y péguenlo dentro de input.txt.
 
-3. Ejecutar el analizador con el comando:
+2. Ejecutar el analizador con el comando:
     ```bash
    node index.js
 
@@ -33,13 +40,13 @@ Para ver el árbol de derivación de forma gráfica interactiva utilizando la ex
 3. Esto leerá el archivo de entrada configurado en el launch.json y abrirá una pestaña a la derecha en Visual Studio Code con el árbol jerárquico visual.
 
 ## Archivos de prueba incluidos
-**input_ok_1.txt:** Ejemplo básico que funciona bien.
+**input_correcto_1.txt:** Ejemplo básico que funciona bien.
 
-**input_ok_2.txt:** Ejemplo más completo con fechas y listas que también funciona.
+**input_correcto_2.txt:** Ejemplo más completo con fechas y listas que también funciona.
 
-**input_error_1.txt:** Rompe porque le saqué un punto y coma al final de una línea (error sintáctico).
+**input_incorrecto_1.txt:** Rompe porque le saqué un punto y coma al final de una línea (error sintáctico).
 
-**input_error_2.txt:** Rompe porque usé comillas dobles en un texto, y la gramática no las acepta (error léxico).
+**input_incorrecto_2.txt:** Rompe porque usé comillas dobles en un texto, y la gramática no las acepta (error léxico).
 
 ## Notas sobre problemas que tuve durante el desarrollo
 Dejo anotados los errores que me fueron surgiendo mientras armaba el proyecto y cómo los fui solucionando:
@@ -57,4 +64,4 @@ En la gramática, el espacio forma parte de la regla CARACTER. Si ponía por eje
 Como el proyecto base venía configurado con "type": "module" en el package.json, Node no me dejaba usar require para importar ANTLR en el index.js. Tuve que cambiar todo a la sintaxis moderna de import y ponerle el .js al final a las rutas de la carpeta generated.
 
 5. Cambios en la versión de ANTLR4: 
-Al querer armar la tabla de tokens, intenté usar lexer.symbolicNames como decía un ejemplo, pero me tiraba que no existía (undefined). Al parecer cambia según la versión de la librería, así que armé una línea en JavaScript que busca esa lista en el lexer o en el parser automáticamente para que no falle.
+Al querer armar la tabla de tokens, intenté usar lexer.symbolicNames como decía un ejemplo, pero me decía que no existía (undefined). Al parecer cambia según la versión de la librería, así que armé una línea en JavaScript que busca esa lista en el lexer o en el parser automáticamente para que no falle.
