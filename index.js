@@ -1,62 +1,122 @@
-import CalculatorLexer from "./generated/CalculatorLexer.js";
-import CalculatorParser from "./generated/CalculatorParser.js";
-import { CustomCalculatorListener } from "./CustomCalculatorListener.js";
-import { CustomCalculatorVisitor } from "./CustomCalculatorVisitor.js";
-import antlr4, { CharStreams, CommonTokenStream, ParseTreeWalker } from "antlr4";
-import readline from 'readline';
 import fs from 'fs';
+import antlr4 from 'antlr4';
+import MetadataLexer from './generated/MetadataLexer.js';
+import MetadataParser from './generated/MetadataParser.js';
+import MetadataVisitor from './generated/MetadataVisitor.js';
 
-async function main() {
+// 1. Manejo de errores personalizado para mostrar línea y causa
+class CustomErrorListener extends antlr4.error.ErrorListener {
+    constructor() {
+        super();
+        this.errores = [];
+    }
+
+    syntaxError(recognizer, offendingSymbol, line, column, msg, e) {
+        this.errores.push(`Línea ${line}:${column} - Error: ${msg}`);
+    }
+}
+
+// 4. Visitor para interpretar el árbol y armar el objeto final
+class CustomMetadataInterpreter extends MetadataVisitor {
+    constructor() {
+        super();
+        this.datos = {};
+    }
+
+    visitMetadata(ctx) {
+        if (ctx.campo()) {
+            for (let c of ctx.campo()) {
+                this.visit(c);
+            }
+        }
+        return this.datos;
+    }
+
+    visitCampo(ctx) {
+        let nombre = ctx.nombreCampo().getText();
+        let valor = this.visit(ctx.valorCampo());
+        this.datos[nombre] = valor;
+        return null;
+    }
+
+    visitValorCampo(ctx) {
+        if (ctx.texto()) return ctx.texto().getText();
+        if (ctx.numero()) return parseInt(ctx.numero().getText(), 10);
+        if (ctx.fecha()) return ctx.fecha().getText();
+        if (ctx.listaTextos()) return this.visit(ctx.listaTextos());
+        return null;
+    }
+
+    visitListaTextos(ctx) {
+        let lista = [];
+        if (ctx.texto()) {
+            for (let t of ctx.texto()) {
+                lista.push(t.getText());
+            }
+        }
+        return lista;
+    }
+}
+
+function main() {
     let input;
-
-    // Intento leer la entrada desde el archivo input - en forma sincrona.
     try {
         input = fs.readFileSync('input.txt', 'utf8');
     } catch (err) {
-        // Si no es posible leer el archivo, solicitar la entrada del usuario por teclado
-        input = await leerCadena(); // Simula lectura síncrona
-        console.log(input);
+        console.log("No se pudo leer el archivo input.txt");
+        return;
     }
 
-    // Proceso la entrada con el analizador e imprimo el arbol de analisis en formato texto
-    let inputStream = CharStreams.fromString(input);
-    let lexer = new CalculatorLexer(inputStream);
-    let tokenStream = new CommonTokenStream(lexer);
-    let parser = new CalculatorParser(tokenStream);
-    let tree = parser.prog();
+    // Configuración inicial de ANTLR
+    const inputStream = new antlr4.InputStream(input);
+    const lexer = new MetadataLexer(inputStream);
+    const tokenStream = new antlr4.CommonTokenStream(lexer);
+    const parser = new MetadataParser(tokenStream);
+
+    // Reemplazamos los listeners de error por defecto por el nuestro
+    const errorListener = new CustomErrorListener();
+    lexer.removeErrorListeners();
+    parser.removeErrorListeners();
+    lexer.addErrorListener(errorListener);
+    parser.addErrorListener(errorListener);
+
+    tokenStream.fill();
+    const tree = parser.metadata();
+
+    // PUNTO 1: Mostrar si hay errores o si la entrada es válida
+    if (errorListener.errores.length > 0) {
+        console.log("Se encontraron errores de sintaxis en la entrada:");
+        errorListener.errores.forEach(e => console.log(e));
+        return; // Corta la ejecución acá si hay errores
+    } else {
+        console.log("Entrada válida. Análisis correcto.\n");
+    }
+
+    // PUNTO 2: Imprimir la tabla de Lexemas y Tokens
+    console.log("--- Tabla de Lexemas-Tokens ---");
+    for (let token of tokenStream.tokens) {
+        if (token.type !== antlr4.Token.EOF) {
+            // Buscamos el nombre del token de forma segura
+            const dicc = lexer.symbolicNames || lexer.constructor.symbolicNames || parser.symbolicNames || parser.constructor.symbolicNames || [];
+            const nombreToken = dicc[token.type] || `ID_${token.type}`;
+            const lexema = token.text.replace(/\r?\n|\r/g, "\\n");
+            
+            console.log(`${nombreToken} -> ${lexema}`);
+        }
+    }
+
+    // PUNTO 3: Imprimir el árbol de análisis sintáctico
+    console.log("\n--- Árbol de derivación ---");
+    console.log(tree.toStringTree(parser.ruleNames));
+
+    // PUNTO 4: Traducción e interpretación a JS
+    console.log("\n--- Resultado de la Interpretación ---");
+    const interpreter = new CustomMetadataInterpreter();
+    const resultadoJS = interpreter.visit(tree);
     
-    // Verifico si se produjeron errores
-    if (parser.syntaxErrorsCount > 0) {
-        console.error("\nSe encontraron errores de sintaxis en la entrada.");
-    } 
-    else {
-        console.log("\nEntrada válida.");
-        const cadena_tree = tree.toStringTree(parser.ruleNames);
-        console.log(`Árbol de derivación: ${cadena_tree}`);
-
-        // Utilizo un listener y un walker para recorrer el arbol e indicar cada vez que reconoce una sentencia (stat)
-        //const listener = new CustomCalculatorListener();
-        // ParseTreeWalker.DEFAULT.walk(listener, tree);
-
-        // Utilizo un visitor para visitar los nodos que me interesan de mi arbol
-        const visitor = new CustomCalculatorVisitor();
-        visitor.visit(tree);   
-    }
+    // Imprimimos el objeto como lo vería un programa real de JavaScript
+    console.log("Objeto JavaScript generado:");
+    console.log(resultadoJS);
 }
 
-function leerCadena() {
-    const rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    });
-
-    return new Promise(resolve => {
-        rl.question("Ingrese una cadena: ", (answer) => {
-            rl.close();
-            resolve(answer);
-        });
-    });
-}
-
-// Ejecuta la función principal
 main();

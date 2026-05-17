@@ -1,8 +1,5 @@
-x = 2 + 3
-y = 3
-z = x + y
-z
-
-
-
-
+nombre:Mi Analizador;
+tipo:Proyecto;
+tamano:2048;
+creado:2026-05-16;
+etiquetas:[javascript,antlr4,test];
