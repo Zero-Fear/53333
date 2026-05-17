@@ -8,14 +8,7 @@ Este proyecto es un analizador léxico y sintáctico hecho con ANTLR4 y Node.js.
 * **ANTLR**: antlr-4.13.2-complete.jar
 
 ## Como abrir el proyecto:
-Copia el enlace del repositorio y clonalo en tu computadora con el siguiente comando en el cmd(terminal) : 
-    ```bash
-   git clone (enlace del repositorio)
-Una vez clonado, abre la carpeta completa del proyecto utilizando VS Code con los comandos : 
-    ```bash
-   cd 53333
-   //luego : 
-   code .
+Copia el enlace del repositorio y clonalo en tu computadora con el siguiente comando en el cmd(terminal) : 'git clone (enlace del repositorio)' Una vez clonado, abre la carpeta completa del proyecto utilizando VS Code con los comandos : 'cd 53333' luego : 'code .' .
 
 ## Cómo ejecutar y probar el proyecto
 
