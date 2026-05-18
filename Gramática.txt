@@ -1,0 +1,12 @@
+<Metadata> ::= {<Campo>}*
+<Campo> ::= <NombreCampo> ":" <ValorCampo> <FinCampo>
+<NombreCampo> ::= "nombre" | "tipo" | "tamaño" | "creado" | "modificado" | "autor" | "descripcion" | "etiquetas"
+<ValorCampo> ::= <Texto> | <Numero> | <Fecha> | <ListaTextos>
+<Texto> ::= {<Caracter>}+
+<Numero> ::= {<Digito>}+
+<Fecha> ::= <Digito>{4} "-" <Digito>{2} "-" <Digito>{2} [ " " <Digito>{2} ":" <Digito>{2} [ ":" <Digito>{2} ] ]
+<ListaTextos> ::= "[" <Texto> ( "," <Texto> )* "]"
+<Caracter> ::= <Letra> | <Digito> | "_" | "-" | "." | " "
+<Letra> ::= "a"..."z" | "A"..."Z"
+<Digito> ::= "0"..."9"
+<FinCampo> ::= ";"
