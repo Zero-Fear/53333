@@ -1,2 +1,6 @@
-nombre:"Mi Proyecto";
-tamano:2048;
+nombre:"video_vacaciones.mp4";
+tipo:multimedia;
+creado:2026-01-12;
+autor:Pepe;
+descripcion:Cruce por el paso Los Libertadores;
+etiquetas:[viaje,chile,familia,auto];

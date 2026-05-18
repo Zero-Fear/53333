@@ -1,4 +1,8 @@
-nombre:Analizador Metadatos;
-tipo:docx;
-tamano:1024;
-creado:2026-05-16;s
+nombre:reporte_final_sistemas.pdf;
+tipo:documento;
+tamano:15420;
+creado:2026-04-15;
+modificado:2026-05-18 15:30:45;
+autor:Ignacio Cruvellier;
+descripcion:Trabajo practico integrador para el segundo parcial;
+etiquetas:[utn,parcial,sintaxis,aprobado];

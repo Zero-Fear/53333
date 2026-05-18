@@ -9,7 +9,7 @@ nombreCampo :'nombre'
             |'creado'
             |'modificado'
             |'autor'
-            |'descripción'
+            |'descripcion'
             |'etiquetas'
             ;
 valorCampo :texto

@@ -1,4 +1,0 @@
-nombre:Analizador Metadatos;
-tipo:docx;
-tamano:1024;
-creado:2026-05-16;s

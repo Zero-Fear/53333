@@ -1,2 +1,8 @@
-nombre:Mi Proyecto
-tipo:pdf;
+nombre:backup_servidor_linux.tar;
+tipo:archivo_comprimido;
+tamano:50000;
+creado:2026-04-01 08:00;
+modificado:2026-04-02 10:15
+autor:Admin Root;
+descripcion:Copia de seguridad de los discos;
+etiquetas:[linux,mint,backup,seguridad];

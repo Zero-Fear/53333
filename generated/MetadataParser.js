@@ -1,4 +1,4 @@
-// Generated from c:/Users/ignac/OneDrive/Documentos/Facultad - UTN 1°Año (2025)/3° Semestre/Sintaxis y Semántica de los Lenguajes/53333/Metadata.g4 by ANTLR 4.13.2
+// Generated from c:/Users/ignac/OneDrive/Documentos/Facultad - UTN 1ï¿½Aï¿½o (2025)/3ï¿½ Semestre/Sintaxis y Semï¿½ntica de los Lenguajes/53333/Metadata.g4 by ANTLR 4.13.2
 // jshint ignore: start
 import antlr4 from 'antlr4';
 import MetadataListener from './MetadataListener.js';
@@ -32,7 +32,7 @@ export default class MetadataParser extends antlr4.Parser {
 
     static grammarFileName = "Metadata.g4";
     static literalNames = [ null, "':'", "'nombre'", "'tipo'", "'tamano'", 
-                            "'creado'", "'modificado'", "'autor'", "'descripci\\u00C3\\u00B3n'", 
+                            "'creado'", "'modificado'", "'autor'", "'descripcion'", 
                             "'etiquetas'", "'['", "','", "']'", "';'" ];
     static symbolicNames = [ null, null, null, null, null, null, null, null, 
                              null, null, null, null, null, "FIN_CAMPO", 

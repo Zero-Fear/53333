@@ -1,4 +1,4 @@
-// Generated from c:/Users/ignac/OneDrive/Documentos/Facultad - UTN 1°Año (2025)/3° Semestre/Sintaxis y Semántica de los Lenguajes/53333/Metadata.g4 by ANTLR 4.13.2
+// Generated from c:/Users/ignac/OneDrive/Documentos/Facultad - UTN 1ï¿½Aï¿½o (2025)/3ï¿½ Semestre/Sintaxis y Semï¿½ntica de los Lenguajes/53333/Metadata.g4 by ANTLR 4.13.2
 // jshint ignore: start
 import antlr4 from 'antlr4';
 
